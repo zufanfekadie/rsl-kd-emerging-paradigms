@@ -1,7 +1,6 @@
 # Bounded Recursive Self-Learning & Knowledge Distillation
 
-Applied implementation for **iCog Labs AI Internship Training: Emerging AI Paradigms**.
-Combines **Track A (Bounded Recursive Self-Learning Loop)** and **Track B (Knowledge Distillation)** into an integrated stretch-goal system.
+An applied research implementation combining **Bounded Recursive Self-Learning (RSL)** with holdout gating and **Knowledge Distillation (KD)** for efficient model compression.
 
 ---
 
@@ -11,9 +10,9 @@ Combines **Track A (Bounded Recursive Self-Learning Loop)** and **Track B (Knowl
    [15% Seed Data]
           │
           ▼
-   Teacher v0 (Large MLP, ~100k params)
+   Teacher v0 (Large MLP, ~60k params)
           │
-          ├──► Recursive Self-Learning Loop (Track A)
+          ├──► Recursive Self-Learning Loop
           │      1. Generate: sample pseudo-labels on 55% unlabeled pool
           │      2. Verify: check against independent external oracle
           │      3. Curate: keep high-confidence verified samples
@@ -24,7 +23,7 @@ Combines **Track A (Bounded Recursive Self-Learning Loop)** and **Track B (Knowl
    Teacher Final (Improved, accurate, high-capacity)
           │
           ▼
-   Knowledge Distillation Pipeline (Track B)
+   Knowledge Distillation Pipeline
           ├──► Hard-Label Student (2.4k params, trained only on hard labels)
           └──► Distilled Student (2.4k params, trained on Teacher Soft Targets, T=3.5, α=0.3)
           │
@@ -57,8 +56,22 @@ $$\text{Decision} =
 ## 3. How to Run
 
 ```bash
-cd D:\projects\rsl_kd_project
 python main.py
 ```
 
-Results and charts will be generated inside `D:\projects\rsl_kd_project\artifacts\figures/`.
+### Run Benchmarks & Visualizations:
+```bash
+# Multi-seed evaluation suite
+python experiments/multi_seed.py
+
+# Temperature and alpha ablation study
+python experiments/ablation.py
+
+# Visualize dark knowledge in teacher logits
+python experiments/dark_knowledge_viz.py
+
+# Run fast interactive presentation demo
+python demo.py
+```
+
+Results and publication-ready figures are saved in `artifacts/figures/`.
